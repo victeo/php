@@ -11,7 +11,7 @@ $botaologin = filter_input(INPUT_POST, 'botao', FILTER_SANITIZE_STRING);
 if(isset($botaologin)){
 	$user = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_STRING);
 	$senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
-
+	
 	if(is_int($busca1) and is_string($busca2)){
 	echo 'deu certo';
 
