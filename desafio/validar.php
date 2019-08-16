@@ -11,50 +11,78 @@ $botaologin = filter_input(INPUT_POST, 'botao', FILTER_SANITIZE_STRING);
 if(isset($botaologin)){
 	$user = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_STRING);
 	$senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
-#abre o arquivo com os dados dos usuários
-	$dados = file_get_contents('usuarios.txt');
 
-	#Verifica se existe
-	
-	$passe = 0;
-	#verifica a senha no banco de dados
-	echo verificar($user);
-	if($senha==$passe){
+	if(is_int($busca1) and is_string($busca2)){
+	echo 'deu certo';
 
-			if($user==$arr[0]){
-				echo 'Olá! Você foi autenticado com sucesso. Seu usuário é o'.$user.'<br>';
-				echo $senha;
-				
-
-
-
-			}else{
-
-				$_SESSION['msg'] = '<div class="alert alert-danger" role="alert">'.'Login ou senha incorretas'.'</div>';
-				header('location: index.php');
-			}
-		
-	} else{
+	}else{
+		echo 'deu erro';
+	}
+}else{
 		$_SESSION['msg'] = '<div class="alert alert-danger" role="alert">'.'Login ou senha incorretas'.'</div>';
 		header('location: index.php');
-			}
 }
+
+
+//-------------------------------------------------------------------------------------------------------
+
 #FUNÇÃO ONDE BUSCA O USUÁRIO ENCONTRANDO SUA LINHA E EM SEGUINDA OLHA SUA SENHA
-function verificar($user){
-	is_array($arr = explode('/', file_get_contents('usuarios.txt')));
-	foreach($arr as $v){
-	is_array($val = explode(",",$v));
-	print_r($val);
+is_array($arr = explode('/', file_get_contents('usuarios.txt')));
 
-	}
-	$busca = array_search($user, array_column($arr,'0'));
-	$passe = $arr[$busca]['1'];
-	echo $passe;
+		 	$data2=array();
+		foreach ($arr as $dat){
+			$data2[] = explode(",", $dat);
+		}
 
-	
-		
-	
-}
+
+//faz um filtro na matriz trazendo somente a senha 
+
+$users = array_column($data2, 0,1);//substitua o número pela posição do vetor desejada
+
+//verifica a existência da variável user na array users
+$busca1 = array_search($user,$users);
+
+//-------------------------------------------------------------------------------------------------------
+#verifica a senha se existe
+is_array($arr = explode('/', file_get_contents('usuarios.txt')));
+
+		 	$data2=array();
+		foreach ($arr as $dat){
+			$data2[] = explode(",", $dat);
+		}
+
+
+//faz um filtro na matriz trazendo somente a senha 
+
+$senha = array_column($data2, 1,0);//substitua o número pela posição do vetor desejada
+
+//verifica a existência da variável user na array users
+$busca2 = array_search($pass,$senha);
+
+//-------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #Sistema que só grava o usuário
