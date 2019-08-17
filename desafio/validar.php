@@ -1,7 +1,7 @@
-<body class="cor">
 <?php  
 session_start();
-include 'header.php';
+	
+
 
 ?>
 <?php 
@@ -12,57 +12,70 @@ if(isset($botaologin)){
 	$user = filter_input(INPUT_POST, 'usuario', FILTER_SANITIZE_STRING);
 	$senha = filter_input(INPUT_POST, 'senha', FILTER_SANITIZE_STRING);
 	
-	if(is_int($busca1) and is_string($busca2)){
-	echo 'deu certo';
+	verificar($user,$senha);
 
-	}else{
-		echo 'deu erro';
-	}
+		if(verificar($user,$senha)){
+			
+
+			header('location: logado.php');
+
+
+
+		}else{
+
+
+		$_SESSION['msg'] = '<div class="alert alert-danger" role="alert">'.'Login ou senha incorretas'.'</div>';
+		header('location: index.php');
+
+
+
+		}
+
+
 }else{
 		$_SESSION['msg'] = '<div class="alert alert-danger" role="alert">'.'Login ou senha incorretas'.'</div>';
 		header('location: index.php');
+
 }
 
 
-//-------------------------------------------------------------------------------------------------------
 
-#FUNÇÃO ONDE BUSCA O USUÁRIO ENCONTRANDO SUA LINHA E EM SEGUINDA OLHA SUA SENHA
-is_array($arr = explode('/', file_get_contents('usuarios.txt')));
-
+//-------- Função de verificação de existência de usuário e senha ---------
+function verificar($user,$senha){
+	is_array($arr = explode('/', file_get_contents('usuarios.txt')));
 		 	$data2=array();
-		foreach ($arr as $dat){
-			$data2[] = explode(",", $dat);
-		}
+
+			foreach ($arr as $dat){
+
+				$data2 = explode(",", $dat);
+
+				$vet[] = array("id"=>$data2[0],"user"=>$data2[1],"senha"=>$data2[2]);
+
+				
+			}
+	echo '<pre>';
+	//print_r($vet);
 
 
-//faz um filtro na matriz trazendo somente a senha 
+	$chave = array_search($user, array_column($vet, 'user'));
 
-$users = array_column($data2, 0,1);//substitua o número pela posição do vetor desejada
+	//print_r($chave);
 
-//verifica a existência da variável user na array users
-$busca1 = array_search($user,$users);
-
-//-------------------------------------------------------------------------------------------------------
-#verifica a senha se existe
-is_array($arr = explode('/', file_get_contents('usuarios.txt')));
-
-		 	$data2=array();
-		foreach ($arr as $dat){
-			$data2[] = explode(",", $dat);
-		}
-
-
-//faz um filtro na matriz trazendo somente a senha 
-
-$senha = array_column($data2, 1,0);//substitua o número pela posição do vetor desejada
-
-//verifica a existência da variável user na array users
-$busca2 = array_search($pass,$senha);
-
-//-------------------------------------------------------------------------------------------------------
+	
 
 
 
+
+
+	if ($vet[$chave]['senha'] == $senha) {
+		$_SESSION['usuario'] = $vet[$chave];
+		
+		return true;
+	}else{
+		return false;
+	}
+}
+//----------------------final função--------------------------
 
 
 
@@ -128,4 +141,3 @@ if(isset($botaologin)){
 
 
 ?>
-</body>

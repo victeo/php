@@ -1,33 +1,40 @@
 <?php 
 
 	#Verifica se existe
-$user = 'victor';
+$user = 'diego';
 $pass = 'adadas';
 
+
 // Transforma o texto em uma matriz
-function verificar($user){
+//function verificar($user){
+	
 is_array($arr = explode('/', file_get_contents('usuarios.txt')));
+echo '<pre>';
+//print_r($arr);
+
 
 		 	$data2=array();
+
 		foreach ($arr as $dat){
+
 			$data2[] = explode(",", $dat);
+			//print_r($data2);
 		}
-
-
 //faz um filtro na matriz trazendo somente a senha 
-
 $users = array_column($data2, 0,1);//substitua o número pela posição do vetor desejada
 print_r($users);
-
 //verifica a existência da variável user na array users
 $busca1 = array_search($user,$users);
-return $busca1;//caso não
 
-}
-
+echo $busca1;//caso não
 
 
-is_array($arr = explode('/', file_get_contents('usuarios.txt')));
+
+
+//------------------------------------------------------------
+//------------------------------------------------------------
+
+is_array($arr = explode('/', file_get_contents('usuarios.txt')));//
 
 		 	$data2=array();
 		foreach ($arr as $dat){
@@ -38,20 +45,45 @@ is_array($arr = explode('/', file_get_contents('usuarios.txt')));
 //faz um filtro na matriz trazendo somente a senha 
 
 $pasw = array_column($data2, 1,0);//substitua o número pela posição do vetor desejada
-print_r($pasw);
+//print_r($pasw);
 
 //verifica a existência da variável user na array users
 $busca2 = array_search($pass,$pasw);
 
+//------------------------------------------------------------
+//------------------------------------------------------------
 
-
-if(is_string($busca)){
+if(is_int($busca1)){
 	echo 'deu certo';
 
 }else{
 	echo 'deu certo não';
 }
-/*function verificar($user){
+
+
+//------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+/*
+
+function verificar($user){
+is_array($arr = explode('/', file_get_contents('usuarios.txt')));
+
+		 	$data2=array();
+		foreach ($arr as $dat){
+			$data2[] = explode(",", $dat);
+		}
+
+
+function verificar($user){
 	is_array($arr = explode('/', file_get_contents('usuarios.txt')));
 		$val = array();
 	foreach($arr as $v){
