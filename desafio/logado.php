@@ -22,15 +22,17 @@ is_array($arr = explode('/', file_get_contents('usuarios.txt')));
 			}
 	echo '<pre>';
 	echo '<table class="table">';
-	//print_r($vet);
+print_r($vet);
 //------------------------
 	foreach ($vet as $value) { ?>
 		
 		
 			<tr>
-				<td><?php echo $value["id"]; ?></td>
-				<td><?php echo $value["user"]; ?></td>
-				<td><?php echo $value["senha"]; ?></td>
+				<?php foreach ($value as $val) { ?>
+				<td><?php echo $val; ?></td>
+				<?php } ?>
+				<!--td><?php echo $value["user"]; ?></td>
+				<td><?php echo $value["senha"]; ?></td-->
 			</tr>
 	
 	
