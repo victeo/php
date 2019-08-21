@@ -86,5 +86,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+
+.caixa{
+  background: #0000004d;
+  border: 1px;
+  border-radius: 5px;
+      padding: 24px 20px;
+}
+.caixa2{
+  border-radius: 5px;
+  margin-top: 10px;
+
+}
+.separar{
+  margin-top: 10px;
+}
+
+
+
 </style>
 
