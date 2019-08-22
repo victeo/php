@@ -1,15 +1,18 @@
 <?php  
 session_start();
-if(!isset($_SESSION['usuario'])){
+/*if(!isset($_SESSION['usuario'])){
 	header('location: index.php');
 	exit;
-}
+}*/
 include 'header.php';
 ?>
 <?php
 
 //echo $_SESSION['usuario']["user"].', login efetuado com sucesso';
 is_array($arr = explode('/', file_get_contents('usuarios.txt')));
+//echo '<pre>';
+//print_r($arr);
+
 $data2=array();
 
 foreach ($arr as $dat){
@@ -20,8 +23,9 @@ foreach ($arr as $dat){
 
 
 }
-//echo '<pre>';
 //print_r($vet);
+//echo '</pre>';
+
 //------------------------
 function tabela($vet){
 ?>
@@ -33,6 +37,8 @@ function tabela($vet){
 			<th scope="col">Nome</th>
 			<th scope="col">Senha</th>
 			<th scope="col">Email</th>
+			<th scope="col">Ação</th>
+
 		</tr>
 <?php
 	foreach ($vet as $value) { 
@@ -41,7 +47,7 @@ function tabela($vet){
 ?>
 				<td><?php echo $val; ?></td>
 			<?php } ?>
-				
+					<td><input type="submit" name="enviardados" class="btn btn-primary btn-user btn-block" value="Deletar"></td>
 					</tr>
 
 
@@ -56,7 +62,6 @@ function tabela($vet){
 
 
 <?php
-
 
 			}		?>
 
@@ -75,22 +80,20 @@ function tabela($vet){
 <div class="container">
 	<div class="row">
 		<div class="col-sm-12 caixa">
-			<form>
+			<form method="POST" action="">
 				<div class="form-row">
+					
+					<div class="col-4">
+						<input type="text" class="form-control" name="nome">
+					</div>
 					<div class="col">
-						<input type="text" class="form-control" placeholder="ID" name="ID">
+						<input type="text" class="form-control" name="senha">
 					</div>
 					<div class="col-4">
-						<input type="text" class="form-control" placeholder="Nome" name="nome">
+						<input type="email" class="form-control"  name="email">
 					</div>
 					<div class="col">
-						<input type="text" class="form-control" placeholder="Senha" name="senha">
-					</div>
-					<div class="col-4">
-						<input type="email" class="form-control" placeholder="email" name="email">
-					</div>
-					<div class="col">
-						<input type="submit" name="cadastro"class="form-control btn btn-success" value="Enviar">
+						<input type="submit" name="cadastro" class="form-control btn btn-success" value="Enviar">
 					</div>
 				</div>
 			</form>
@@ -104,30 +107,37 @@ function tabela($vet){
 </div>
 <?php
 
+	$_SESSION['i'] = $data2[0] + 1;
 
-if (isset($_POST['cadastro'])) {
 
-	$iscrivido = 'oitudo bem';
+if (isset($_POST['cadastro']) ) {
 
-	//array('id'=>$_POST['ID'],'user'=>$_POST['nome'],'senha'=>$_POST['senha'],'email'=>$$_POST['email']);
+	if(isset($_POST['nome']) and isset($_POST['senha']) and isset($_POST['email'])){
+			
+
+
+	$iscrivido = array('id'=>$_SESSION['i'],'user'=>$_POST['nome'],'senha'=>$_POST['senha'],'email'=>$_POST['email']);
+	$escrever = '';
+	$escrever .= "/";
+
+	$escrever .= implode(',',$iscrivido);
 
 			//Cria o arquivo ou abre caso já exista
-			$arquivo = fopen('usuarios1.txt','a+');
+			$arquivo = fopen('usuarios.txt','a+');
 			
 			
 			if ($arquivo == false) die('Não foi possível criar o arquivo.');
 			//Escreve no arquivo
-			
-			fwrite($arquivo, $iscrivido);
+			//fwrite($arquivo, '/');
+			fwrite ($arquivo, $escrever);
 			//Fechamos o arquivo após escrever nele
 			fclose($arquivo);
+
+				
+
+
+		}
+
+
 }
-	
 
-?>
-
-
-<?php  
-include 'footer.php';
-
-?>
